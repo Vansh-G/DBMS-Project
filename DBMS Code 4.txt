@@ -1,0 +1,207 @@
+create table customer(
+fname varchar2(20),
+lname varchar2(20),
+custid integer primary key,
+emailid varchar2(20),
+pwd varchar2(20),
+address varchar2(20),
+pincode integer,
+gender varchar2(20),
+phoneno integer
+allergies varchar2(20));
+
+create table cuisine(
+cuisineid integer primary key,
+cuisinename varchar2(20));
+
+create table employee(
+empid integer primary key,
+fname varchar2(20),
+lname varchar2(20),
+dob varchar2(20),
+emailid varchar2(20),
+pwd varchar2(20),
+address varchar2(20),
+phoneno integer,
+gender varchar2(20),
+salary number(10,2));
+
+create table chef(
+chefid integer primary key,
+chefname varchar2(20),
+address varchar2(20),
+phoneno varchar2(20),
+spec references cuisine(cuisineid),
+emailid varchar2(20),
+pwd varchar2(20),
+gender varchar2(20)
+salary number(10,2));
+
+create table ingredients(
+ingid integer primary key,
+ingname varchar2(20));
+
+create table food(
+foodid integer primary key,
+foodname varchar2(20),
+price integer,
+quantity integer,
+foodavail varchar2(20),
+cuisineid references cuisine(cuisineid),
+ingid references ingredients(ingid));
+
+create table drinks(
+drinksid integer primary key,
+drinksname varchar2(20),
+price number(10,2),
+quantity varchar2(20),
+drinksavail varchar2(20));
+
+create table delivery(
+delid integer primary key,
+deliverypartner_name varchar2(20),
+custid references customer(custid),
+empid references employee(empid),
+ordid references orders(ordid),
+deldate date,
+deltime varchar2(20));
+
+create table orders(
+ordid integer primary key,
+totalcost integer,
+chefid references chef(chefid),
+foodid references food(foodid),
+drinksid references drinks(drinksid),
+delid references delivery(delid));
+
+create table payment(
+payid integer primary key,
+paymethod varchar2(20),
+custid references customer(custid),
+ordid references orders(ordid));
+
+--Customer table
+
+Insert into customer values('John','smith',100,'john@gmail.com','xxy','Bangalore',560041,'M',9933300924,'egg');
+Insert into customer values('Ravi','Sharma',101,'raviS@gmail.com','abc','Bangalore',560041,'M','9242889791','onion,garlic');
+Insert into customer values('Preethi','Prasad',102,'preethi@yahoo.com','xyz','Bangalore',560070,'F',9844037640,NULL);
+Insert into customer values('kumar','narayan',103,'kumar@gmail.com','aab','Bangalore',560004,'M',9511747841,'nuts');
+Insert into customer values('chetana','ashok',104,'chetana@yahoo.in',123,'Bangalore',560041,'F',998056423,NULL);
+Insert into customer values('harsha','gowda',105,'harshaG@gmail.com','bbc','Bangalore',560070,'M',8861268940,NULL);
+Insert into customer values('priya','singh',106,'priya@gmail.com','cba','Bangalore',560038,'F',8879610560,'egg');
+Insert into customer values('Neha','jayanth',107,'neha@gmail.com','rsa','Bangalore',560041,'F',8924299881,NULL);
+Insert into customer values('Alice','zelaya',108,'alice@gmail.com','cvd','Bangalore',400050,'F',7031086846,NULL);
+Insert into customer values('ahmad','jabbar',109,'jahmad@gmail.com','dad','Bangalore',60070,'M',9760578022,NULL);
+
+--Cuisine table
+
+Insert into cuisine values(10,'chinese');
+Insert into cuisine values(11,'north indian');
+Insert into cuisine values(12,'south indian');
+Insert into cuisine values(13,'continential');
+Insert into cuisine values(14,'mexican');
+Insert into cuisine values(15,'dessert');
+Insert into cuisine values(16,'thai');
+Insert into cuisine values(17,'italian');
+
+--Employee table
+
+Insert into employee values(1000,'adam','lavine','15-sep-89','adam@gmail.com','adc','Bangalore',9980594577,'M',50000);
+Insert into employee values(1001,'chris','martin','13-aug-92','chris@gmail.com','145','Adugodi',9844038540,'M',40000);
+Insert into employee values(1002,'alex','wasabi','26-jul-82','alexw@gmail.com','123','girinagar',9611747941 ,'M',35000);
+Insert into employee values(1003,'abby','lee','30-jan-95','abby@gmail.com','1@4','kengeri', 9248289899,'F',60000);
+Insert into employee values(1004,'briana','lodge','27-jul-86','briana@gmail.com','aah','jayanagar',8861360860,'F',50000);
+Insert into employee values(1005,'maria','solano','22-dec-95','maria@gmail.com','lad','double road',9483960975,'F',40000);
+Insert into employee values(1006,'ava','anderson','29-jan-86','ava@gmail.com','678','kh road',7486911232,'F',60000);
+Insert into employee values(1007,'raksha','remash','06-jun-92','raksha@gmail.com','894','Bangalore',9835383461,'F',70000);
+
+--Chef table
+
+Insert into chef values(1,'kumar','bangalore',9894757471,15,'kumar@gmail.com','@ed','M',40000);
+Insert into chef values(2,'nikhil','bangalore',7845795451,10,'nikhil@gmail.com','rfd','M',30000);
+Insert into chef values(3,'lakshmi','bangalore',7745777888,12,'lakshmi@gmail.com','poi','F',40000);
+Insert into chef values(4,'ram','bangalore',698454892,13,'ram@gmail.com','uvw','M',30000);
+Insert into chef values(5,'rahul','mysore',744587554,11,'rahul@gmail.com','ytr','M',40000);
+
+--Food table
+
+Insert into food values(60,'biriyani',100,1,'yes',11,150);
+Insert into food values(61,'idlysambar',20,2,'yes',12,150);
+Insert into food values(62,'momos',60,1,'yes',10,152);
+Insert into food values(63,'burger',100,3,'yes',13,153);
+Insert into food values(64,'roti curry',50,2,'yes',12,151);
+Insert into food values(65,'taco',50,4,'yes',14,151);
+Insert into food values(66,'fried rice',60,1,'yes',12,150);
+Insert into food values(67,'ice cream',70,3,'yes',15,154);
+Insert into food values(68,'sandwich',40,1,'yes',13,153);
+Insert into food values(69,'vada',20,2,'yes',12,150);
+Insert into food values(70,'masala dosa',40,4,'yes',12,150);
+Insert into food values(71,'nachos',100,3,'yes',14,151);
+Insert into food values(72,'pizza',200,5,'yes',17,152);
+Insert into food values(73,'pad thai',250,1,'no',16,155);
+Insert into food values(74,'chinesesoup',60,3,'yes',10,155);
+Insert into food values(75,'eggrice',50,3,'yes',11,156);
+
+--Drinks table
+
+Insert into drinks values(80,'pepsi',30,'medium','yes');
+Insert into drinks values(81,'cocacola',35,'medium','yes');
+Insert into drinks values(82,'mirinda',30,'small','yes');
+Insert into drinks values(83,'lemontea',50,'large','yes');
+Insert into drinks values(84,'freshlimejuice',40,'Large','no');
+Insert into drinks values(85,'coffee',20,'small','yes');
+Insert into drinks values(86,'tea',20,'small','no');
+Insert into drinks values(87,'chocolate milkshake',35,'medium','yes');
+
+--Ingredients table
+
+Insert into ingredients values(150,'Rice');
+Insert into ingredients values(151,'wheat');
+Insert into ingredients values(152,'flour');
+Insert into ingredients values(153,'bread');
+Insert into ingredients values(154,'cream');
+Insert into ingredients values(155,'soup');
+Insert into ingredients values(156,'egg');
+
+--Delivery table
+
+Insert into delivery values(30,'chandan',103,1000,22,'22-aug-17','05:00');
+Insert into delivery values(31,'suresh',104,1001,23,'26-jul-17','10:00');
+Insert into delivery values(32,'rajesh',106,1002,24,'15-sep-17','16:00');
+Insert into delivery values(33,'vinay',102,1003,29,'05-oct-17','17:00');
+Insert into delivery values(34,'vijay',109,1004,20,'12-sep-17','09:00');
+Insert into delivery values(35,'sumit',100,1005,26,'10-jan-17','13:00');
+Insert into delivery values(36,'amit',108,1006,21,'06-jan-17','15:00');
+Insert into delivery values(37,'prashant',101,1007,27,'14-mar-17','19:00');
+Insert into delivery values(38,'bhuvan',107,1000,25,'01-jan-17','12:00');
+Insert into delivery values(39,'pramod',105,1001,28,'05-dec-17','13:00');
+
+--Orders table
+
+Insert into orders values(20,185,3,75,81,38);
+Insert into orders values(21,340,3,63,83,37);
+Insert into orders values(22,180,4,70,85,32);
+Insert into orders values(23,120,2,64,80,35);
+Insert into orders values(24,1430,5,72,87,34);
+Insert into orders values(25,150,2,64,83,31);
+Insert into orders values(26,240,3,67,82,30);
+Insert into orders values(27,95,1,66,81,33);
+Insert into orders values(28,420,1,60,87,36);
+Insert into orders values(29,80,1,68,81,39);
+
+--Payment table
+
+Insert into payment values(90,'credit card',100,20);
+Insert into payment values(91,'cash',102,21);
+Insert into payment values(92,'debit card',101,22);
+Insert into payment values(93,'cash',105,23);
+Insert into payment values(94,'cash',104,24);
+Insert into payment values(95,'cash',109,25);
+Insert into payment values(96,'paytm',108,26);
+Insert into payment values(97,'credit card',107,27);
+Insert into payment values(98,'cash',106,28);
+Insert into payment values(99,'cash',103,29);
+
+select * from drinks;
+
+
